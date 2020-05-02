@@ -1,6 +1,6 @@
 #!/usr/bin/python3.6
 #coding:utf-8
-from Food import Food
+from src.app.item.food import Food
 import sys
 
 """
@@ -8,9 +8,12 @@ Classe Tomo
 - Personnage principal du jeu
 """
 class Tomo:
-	def __init__(self, name : str, age : int):
+	def __init__(self, name : str):
+		assert name.isalpha(), "C'pas la bonneuh syntaxeuuh"
+		assert len(name) > 3 and len(name) <= 20, "Le nom du Tomo doit être compris entre 3 et 20 caractères."
+
 		self.name = name # nom du Tomo
-		self.age = age # age du Tomo
+		self.age = 0
 		self.max_health = 100
 		self.health = self.max_health # vie (TODO : faim à implémenter)
 		self.inventory = []
@@ -22,7 +25,9 @@ class Tomo:
 	Nourrit un Tomo
 	@param pts Nombre de points à ajouter aux points de vie
 	"""
-	def eat(self, pts : int):
+	def feed(self, pts : int):
+		assert pts >= 0, "Le nombre de points ne doit pas être inférieur à 0"
+
 		self.health += pts
 		if self.health > self.max_health:
 			self.health = self.max_health
@@ -41,8 +46,10 @@ class Tomo:
 	Utilise un objet (de l'inventaire)
 	@param item L'objet de l'inventaire
 	"""
-	def use(self, item):
-		self.eat(item.heal)
+	def use(self, item : Item):
+		assert isinstance(item, Item), "Le paramètre doit être une instance d'Item"
+
+		self.feed(item.heal)
 		self.inventory.remove(item)
 		item.delete()
 
