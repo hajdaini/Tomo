@@ -1,5 +1,7 @@
 #!/usr/bin/python3.6
 #coding:utf-8
+from src.app.tomo.tomo import Tomo
+from ast import literal_eval
 import sqlite3
 
 """
@@ -43,12 +45,20 @@ class Saver:
 	Création de la table des tomos
 	"""
 	def create_table(self):
-		self.cursor.execute("CREATE TABLE IF NOT EXISTS tomo(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(20) NOT NULL UNIQUE, age INTEGER NOT NULL, items TEXT)")
+		self.cursor.execute("CREATE TABLE IF NOT EXISTS tomo(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(20) NOT NULL UNIQUE, age INTEGER NOT NULL, health INTEGER NOT NULL, items TEXT)")
 
-	def store_data(self):
-		# TODO Faire un tomo Delex dans la BDD
-		self.cursor.execute(f"INSERT INTO tomo(name, age, items) VALUES('Delex', '24', '[Salade, Tomates, Oignons]')")
-		self.cursor.execute(f"INSERT INTO tomo(name, age, items) VALUES('Ralouf', '0', '[Cuillère]')")
+	def store_data(self, tomo : Tomo):
+		sql = "INSERT INTO tomo(name, age, health, items) VALUES(?, ?, ?, ?)"
+		data = (tomo.name, tomo.age, tomo.health, str(tomo.inventory))
+
+		self.cursor.execute(sql, data)
+
+	def load_tomo(self):
+		sql = "SELECT * FROM tomo"
+		data = self.cursor.execute(sql).fetchone()
+		parsed = [elt for elt in data]
+		parsed[4] = literal_eval(parsed[4])
+		return parsed
 	
 	def disconnect(self):
 		self.cursor.close()

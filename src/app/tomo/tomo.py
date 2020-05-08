@@ -1,5 +1,6 @@
 #!/usr/bin/python3.6
 #coding:utf-8
+from src.app.item.item import Item
 from src.app.item.food import Food
 import sys
 
@@ -8,18 +9,18 @@ Classe Tomo
 - Personnage principal du jeu
 """
 class Tomo:
-	def __init__(self, name : str):
-		assert name.isalpha(), "C'pas la bonneuh syntaxeuuh"
+	def __init__(self, name : str, age : int = 0, health : int = 100, inventory : list = []):
+		assert name.isalpha(), "ça, le film"
 		assert len(name) > 3 and len(name) <= 20, "Le nom du Tomo doit être compris entre 3 et 20 caractères."
 
 		self.name = name # nom du Tomo
-		self.age = 0
+		self.age = age
 		self.max_health = 100
-		self.health = self.max_health # vie (TODO : faim à implémenter)
-		self.inventory = []
+		self.health = health
+		self.inventory = inventory
 
 	def __str__(self):
-		return f"[Nom {self.name}, Age {self.age}, VieMax {self.max_health}, Vie {self.health}]"
+		return f"[Nom {self.name}, Age {self.age}, VieMax {self.max_health}, Vie {self.health}, Inventaire {self.inventory}]"
 
 	"""
 	Nourrit un Tomo
