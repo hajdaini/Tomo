@@ -6,10 +6,11 @@ from src.app.item.item import Item
 Objet consommable du jeu
 """
 class Consumable(Item):
+	# id + name + expiration
 	def __init__(self, id : int, name : str, expiration : int):
 		assert expiration > 0, "La valeur d'expiration doit être positive"
 
-		super().__init__(self, id, name)
+		Item.__init__(self, id, name)
 		self.expiration = expiration
 
 	def __str__(self):
