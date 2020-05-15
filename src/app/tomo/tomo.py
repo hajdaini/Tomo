@@ -1,5 +1,6 @@
 #!/usr/bin/python3.6
 #coding:utf-8
+from src.app.database.database import Database
 from src.app.item.item import Item
 from src.app.item.food import Food
 import sys
@@ -53,6 +54,24 @@ class Tomo:
 		self.feed(item.heal)
 		self.inventory.remove(item)
 		item.delete()
+
+	"""
+	Enregistre un Tomo en base de données
+	"""
+	def create_tomo(self, db : Database):
+		sql = "INSERT INTO tomo(name, age, health, items) VALUES(?, ?, ?, ?)"
+		data = (self.name, self.age, self.health, str(self.inventory))
+		db.cursor.execute(sql, data)
+
+	"""
+	Récupère un Tomo depuis la base de données
+	"""
+	def get_tomo(self, db : Database):
+		sql = "SELECT * FROM tomo"
+		data = db.cursor.execute(sql).fetchone()
+		parsed = [elt for elt in data]
+		parsed[4] = literal_eval(parsed[4])
+		return parsed
 
 if __name__ == '__main__':
 	pass
