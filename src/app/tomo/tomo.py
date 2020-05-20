@@ -1,9 +1,12 @@
 #!/usr/bin/python3.6
 #coding:utf-8
-from src.app.database.database import Database
 from src.app.item.item import Item
 from src.app.item.food import Food
 import sys
+import ast
+
+sys.path.append("../")
+from app.database.database import Database
 
 """
 Classe Tomo
@@ -11,7 +14,7 @@ Classe Tomo
 """
 class Tomo:
 	def __init__(self, name : str, age : int = 0, health : int = 100, inventory : list = []):
-		assert name.isalpha(), "ça, le film"
+		assert name.isalpha(), "Bah oué pas de BGdu59"
 		assert len(name) > 3 and len(name) <= 20, "Le nom du Tomo doit être compris entre 3 et 20 caractères."
 
 		self.name = name # nom du Tomo
@@ -19,6 +22,7 @@ class Tomo:
 		self.max_health = 100
 		self.health = health
 		self.inventory = inventory
+		self.table_name = "tomo"
 
 	def __str__(self):
 		return f"[Nom {self.name}, Age {self.age}, VieMax {self.max_health}, Vie {self.health}, Inventaire {self.inventory}]"
@@ -67,11 +71,10 @@ class Tomo:
 	Récupère un Tomo depuis la base de données
 	"""
 	def get_tomo(self, db : Database):
-		sql = "SELECT * FROM tomo"
-		data = db.cursor.execute(sql).fetchone()
-		parsed = [elt for elt in data]
-		parsed[4] = literal_eval(parsed[4])
-		return parsed
+		request = db.select(self.table_name, {'name' : self.name})
+		if request is None:
+			print("Ce Tomo n'existe pas :(")
+		return request
 
 if __name__ == '__main__':
 	pass

@@ -1,6 +1,5 @@
 #!/usr/bin/python3.6
 #coding:utf-8
-from ast import literal_eval
 import sqlite3
 import sys
 
@@ -21,6 +20,9 @@ class Database:
 		else:
 			raise Exception("Classe déjà instanciée")
 
+		self.connect()
+		self.create()
+
 	@staticmethod
 	def GetInstance():
 		if not Database.__instance:
@@ -37,32 +39,50 @@ class Database:
 		except:
 			print("Problème de connexion à la BASE !")
 
-		self.create()
-
 	"""
 	Création des tables dans la base de données
 	"""
 	def create(self):
 		self.cursor.execute("CREATE TABLE IF NOT EXISTS tomo(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(20) NOT NULL UNIQUE, age INTEGER NOT NULL, health INTEGER NOT NULL, items TEXT)")
+		self.cursor.execute("CREATE TABLE IF NOT EXISTS foods(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(20) NOT NULL UNIQUE, expiration INTEGER NOT NULL, heal INTEGER NOT NULL)")
 
-	def save(self, dbname : str, columns : dict):
+	"""
+	Récupérer des données depuis la base
+	"""
+	def select(self, table_name : str, selector : dict):
+		names = ""
+		values = ""
+
+		for name, value in selector.items():
+			names = "'" + str(name) + "'"
+			values = "'" + str(value) + "'"
+			
+		sql = f"SELECT * FROM {table_name} WHERE {names} = {values}"
+		return self.cursor.execute(sql).fetchone()
+
+	def save(self, table_name : str, columns : dict):
 		names = ""
 		values = ""
 
 		for name, value in columns.items():
 			names += "'" + str(name) + "', "
-
 			if isinstance(value, list):
 				values += "'" + " ".join(value) + "', "
 			else:
 				values += "'" + str(value) + "', "
 
+			values = values.strip()
+
 		names = names[:-2]
 		values = values[:-2]
+		sql = f"INSERT INTO {table_name}({names}) VALUES({values})"
 
-		sql = f"INSERT INTO {dbname}({names}) VALUES({values})"
-		print(sql)
-		self.cursor.execute(sql)
+		try:
+			self.cursor.execute(sql)
+		except:
+			pass
+			# 1. Aliment déjà présent, mais à mettre à jour
+			# 2. Aliment déjà présent, ET identique (pas à mettre à jour)
 
 	"""
 	Clôture la connexion à la base de données SQLite
