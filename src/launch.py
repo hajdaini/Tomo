@@ -1,10 +1,9 @@
 #!/usr/bin/python3.6
 #coding:utf-8
-from src.app.database.database import Database
-from src.app.database.scheduler import Scheduler
-from src.app.tomo.tomo import Tomo
-from src.app.item.food import Food
-import sys
+from . database import Database
+from . scheduler import Scheduler
+from . tomo import Tomo
+from . food import Food
 
 """
 Démarre le jeu et propose le menu principal
@@ -12,14 +11,11 @@ Démarre le jeu et propose le menu principal
 def init():
 	db = Database()
 	#TODO Scheduler.initialize(db)
-
-	foo = Food(1, "Pain", 15, 25)
-	tomo = Tomo("Ralouf", 12)
-
+	
 	choice = input("> ")
 	if choice == 'create':
 		# Créer un Tomo (qui sera stockée dans la BDD)
-		tomo = None
+		
 		while tomo is None:
 			name = input("Choisir un nom à votre futur Tomo : ")
 			try:
@@ -28,11 +24,11 @@ def init():
 				print(e)
 		tomo.create_tomo(db)
 	elif choice == 'load':
-		data = tomo.get_tomo(db)
-		if data is not None:
-			print(data)
+		tomo_name = input("Quel nom porte votre Tomo ? ")
+		tomo = Tomo.get_tomo(db, tomo_name)
+		print(tomo)
 	else:
-		print("Confinement difficile ? Go Alt + F4")
+		print("Déconfinement difficile ? Go Alt + F4")
 
 	db.disconnect()
 

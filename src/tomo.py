@@ -1,12 +1,10 @@
 #!/usr/bin/python3.6
 #coding:utf-8
-from src.app.item.item import Item
-from src.app.item.food import Food
+from . database import Database
+from . item import Item
+from . food import Food
 import sys
 import ast
-
-sys.path.append("../")
-from app.database.database import Database
 
 """
 Classe Tomo
@@ -54,8 +52,9 @@ class Tomo:
 	"""
 	def use(self, item : Item):
 		assert isinstance(item, Item), "Le paramètre doit être une instance d'Item"
-
 		self.feed(item.heal)
+		
+		#TODO try/except avant retrait de l'élément
 		self.inventory.remove(item)
 		item.delete()
 
@@ -70,11 +69,12 @@ class Tomo:
 	"""
 	Récupère un Tomo depuis la base de données
 	"""
-	def get_tomo(self, db : Database):
-		request = db.select(self.table_name, {'name' : self.name})
+	@staticmethod
+	def get_tomo(db : Database, name : str):
+		request = db.select("tomo", {'name' : name})
 		if request is None:
 			print("Ce Tomo n'existe pas :(")
-		return request
+		return Tomo(request[1], request[2], request[3], request[4])
 
 if __name__ == '__main__':
 	pass

@@ -54,7 +54,7 @@ class Database:
 		values = ""
 
 		for name, value in selector.items():
-			names = "'" + str(name) + "'"
+			names = str(name)
 			values = "'" + str(value) + "'"
 			
 		sql = f"SELECT * FROM {table_name} WHERE {names} = {values}"

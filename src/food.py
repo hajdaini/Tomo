@@ -1,6 +1,6 @@
 #!/usr/bin/python3.6
 #coding:utf-8
-from src.app.item.consumable import Consumable
+from . consumable import Consumable
 
 """
 Nourriture du jeu

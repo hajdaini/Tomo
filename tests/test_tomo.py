@@ -1,9 +1,10 @@
 #!/usr/bin/python3.6
 #coding:utf-8
 import sys
-sys.path.append("../")
+sys.path.append("..")
 
-from app.tomo.tomo import Tomo
+from src.tomo import Tomo
+from src.food import Food
 import unittest
 import random
 
@@ -15,11 +16,14 @@ class TestTomo(unittest.TestCase):
 
 	def setUp(self):
 		self.tomo_list = [
-			Tomo("Ralof", 2, 100, ["Bâton de sorcier"]), 
-			Tomo("Delex", 23, []), 
-			Tomo("Ra", 9, [])
+			Tomo("Ralof", 2, 100, ["Bâton"]), 
 		]
 
+		self.foods_list = [
+			Food(1, "Bâton", 12, 24), 
+			Food(2, "Potion", 53, 10)
+		]
+	
 	def test_name_attribute(self):
 		for tomo in self.tomo_list:
 			try:
@@ -45,9 +49,19 @@ class TestTomo(unittest.TestCase):
 				self.assertGreaterEqual(pts >= 0)
 			except:
 				print(f"[ERREUR] {tomo.health} : Le nombre de points de soin doit être supérieur ou égal à 0")
-
+	
 	def test_use_method(self):
-		pass
+		for food in self.foods_list:
+			try:
+				self.assertIsInstance(food, Food)
+			except:
+				print(f"[ERREUR] : Le paramètre doit être une instance de Food")
+
+			for tomo in self.tomo_list:
+				try:
+					self.assertIn(food.name, tomo.inventory)
+				except:
+					print(f"[ERREUR] {food.name} : N'est pas dans l'inventaire de {tomo.name} -> {tomo.inventory}")
 
 if __name__ == '__main__':
 	unittest.main()

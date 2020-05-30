@@ -1,6 +1,6 @@
 #!/usr/bin/python3.6
 #coding:utf-8
-from src.app.database.database import Database
+from . database import Database
 import csv
 
 """
@@ -17,7 +17,7 @@ class Scheduler:
 
 	@staticmethod
 	def load_from_csv_to_database(db : Database):
-		game_foods = Scheduler.get_data_from_file("src/data/foods.csv")
+		game_foods = Scheduler.get_data_from_file("../data/foods.csv")
 		column = {
 			"name": None, 
 			"expiration": None, 
