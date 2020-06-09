@@ -10,8 +10,15 @@ class Food(Consumable):
 	def __init__(self, id : int, name : str, expiration : int, heal : int):
 		assert heal > 0, "Les points doivent être positifs"
 
-		Consumable.__init__(self, id, name, expiration)
+		super().__init__(id, name, expiration)
 		self.heal = heal
+
+	def create_food(self, db : Database):
+		pass
+
+	@staticmethod
+	def get_food(db : Database, name : str):
+		pass
 
 if __name__ == '__main__':
 	fo = Food(1, "Pain", 11, 25)

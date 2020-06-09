@@ -10,7 +10,7 @@ class Consumable(Item):
 	def __init__(self, id : int, name : str, expiration : int):
 		assert expiration > 0, "La valeur d'expiration doit être positive"
 
-		Item.__init__(self, id, name)
+		super().__init__(id, name)
 		self.expiration = expiration
 
 	def __str__(self):

@@ -92,15 +92,4 @@ class Database:
 		self.connection.close()
 
 if __name__ == '__main__':
-	db = Database()
-	db.connect()
-
-	data = {
-		"name": "Ralof", 
-		"age": 12, 
-		"health": 100, 
-		"items": ["Cuvette", "Pain"]
-	}
-
-	db.save("tomo", data)
-	db.disconnect()
+	pass
