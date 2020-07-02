@@ -6,11 +6,10 @@ from . item import Item
 Objet consommable du jeu
 """
 class Consumable(Item):
-	# id + name + expiration
-	def __init__(self, id : int, name : str, expiration : int):
+	def __init__(self, identifier : int, name : str, expiration : int):
 		assert expiration > 0, "La valeur d'expiration doit être positive"
 
-		super().__init__(id, name)
+		super().__init__(identifier, name)
 		self.expiration = expiration
 
 	def __str__(self):
@@ -31,6 +30,3 @@ class Consumable(Item):
 	def delete(self):
 		print(f"{self.name} ({self.id}) a expiré")
 		self.__del__()
-
-	def __del__(self):
-		pass

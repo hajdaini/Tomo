@@ -10,7 +10,7 @@ Classe Database
 class Database:
 	__instance = None
 
-	def __init__(self, filename : str = 'tomo.db'):
+	def __init__(self, filename : str):
 		self.filename = filename
 		self.connection = None
 		self.cursor = None
@@ -24,9 +24,9 @@ class Database:
 		self.create()
 
 	@staticmethod
-	def GetInstance():
+	def GetInstance(filename : str = 'tomo.db'):
 		if not Database.__instance:
-			Database()
+			Database(filename)
 		return Database.__instance
 
 	"""
@@ -81,8 +81,6 @@ class Database:
 			self.cursor.execute(sql)
 		except:
 			pass
-			# 1. Aliment déjà présent, mais à mettre à jour
-			# 2. Aliment déjà présent, ET identique (pas à mettre à jour)
 
 	"""
 	Clôture la connexion à la base de données SQLite
