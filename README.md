@@ -44,7 +44,7 @@ Mettez à jour la liste de vos dépôts et télécharger ensuite le paquet pytho
 
 ```shell
 apt update -y
-apt install -y python3 python3-pip
+apt install -y python3 python3-pip python3-pygame
 pip3 install pygame
 ```
 
@@ -54,7 +54,7 @@ Mettez à jour la liste de vos dépôts et téléchargez ensuite le paquet `pyth
 
 ```shell
 yum update -y
-yum install -y python3 python3-pip
+yum install -y python3 python3-pip python3-pygame
 pip3 install pygame
 ```
 
