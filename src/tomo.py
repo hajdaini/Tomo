@@ -63,13 +63,10 @@ class Tomo:
 	Enregistre un Tomo en base de données
 	"""
 	def create_tomo(self, db : Database):
-		sql = "INSERT INTO tomo(name, age, health, items) VALUES(?, ?, ?, ?)"
-		data = (self.name, self.age, self.health, str(self.inventory))
-
-		try:
-			db.cursor.execute(sql, data)
-		except Exception as e:
-			print(e)
+		db.save(self.table_name, {'name' : self.name, 
+		                         'age' : self.age, 
+								 'health' : self.health, 
+								 'items' : self.inventory})
 
 	"""
 	Récupère un Tomo depuis la base de données

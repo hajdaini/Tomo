@@ -74,13 +74,13 @@ class Database:
 			values = values.strip()
 
 		names = names[:-2]
-		values = values[:-2]
+		values = values[:-1]
 		sql = f"INSERT INTO {table_name}({names}) VALUES({values})"
 
 		try:
 			self.cursor.execute(sql)
-		except:
-			pass
+		except Exception as e:
+			print(e)
 
 	"""
 	Clôture la connexion à la base de données SQLite

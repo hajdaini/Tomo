@@ -21,11 +21,20 @@ L’utilisateur peut créer un petit animal et interagir avec ce dernier pour le
 
 ## Prérequis
 
-Pour tester le jeu, vous devez au préalable installer l'interpréteur python sous sa version 3.
+Pour tester le jeu, vous devez au préalable :
+- Installer l'interpréteur python sous sa version 3
+- Installer le gestionnaire de paquets python pip
+- Installer la bibliothèque pygame
 
 ### Windows
 
 Ouvrez une fenêtre de votre navigateur et télécharger et exécuter le [dernièr exécutable python](https://www.python.org/downloads/).
+
+et installer la bibliothèque pygame :
+
+```shell
+pip install pygame
+```
 
 ### Linux
 
@@ -35,7 +44,8 @@ Mettez à jour la liste de vos dépôts et télécharger ensuite le paquet pytho
 
 ```shell
 apt update -y
-apt install -y python3
+apt install -y python3 python3-pip
+pip3 install pygame
 ```
 
 #### Famille RedHat
@@ -44,7 +54,8 @@ Mettez à jour la liste de vos dépôts et téléchargez ensuite le paquet `pyth
 
 ```shell
 yum update -y
-yum install -y python3
+yum install -y python3 python3-pip
+pip3 install pygame
 ```
 
 ## Lancer le jeu
